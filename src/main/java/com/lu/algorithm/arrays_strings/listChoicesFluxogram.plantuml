@@ -1,0 +1,42 @@
+@startuml
+start
+
+:Precisa de uma Coleção de Tamanho Fixo?;
+if (Tamanho Fixo?) then (Sim)
+  :Array ou Arrays.asList();
+  stop
+else (Não)
+  :Precisa de Mutabilidade?;
+  if (Mutabilidade?) then (Sim)
+    :Precisa de Sincronização?;
+    if (Sincronização?) then (Sim)
+      :Leitura Muito Mais Frequente que Escrita?;
+      if (Leitura Frequente?) then (Sim)
+        :CopyOnWriteArrayList;
+        stop
+      else (Não)
+        :Adições/Remoções Frequentes no Início ou Fim?;
+        if (Adição/Remoção Frequente?) then (Sim)
+          :LinkedList;
+          stop
+        else (Não)
+          :ArrayList;
+          stop
+        endif
+      endif
+    else (Não)
+      :Adições/Remoções Frequentes no Início ou Fim?;
+      if (Adição/Remoção Frequente?) then (Sim)
+        :LinkedList;
+        stop
+      else (Não)
+        :ArrayList;
+        stop
+      endif
+    endif
+  else (Não)
+    :List.of() ou Collections.unmodifiableList();
+    stop
+  endif
+endif
+@enduml

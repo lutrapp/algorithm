@@ -1,0 +1,68 @@
+
+a)Listas mutáveis:
+- ArrayList<String>
+
+Indexada: sim, os elementos podem ser acessados por índice.
+Características: Rápida para acessar elementos por índice, mas adicionar ou remover elementos pode ser lento,
+especialmente se envolver realocação de elementos.
+
+Exemplo:
+List<String> mutableList = new ArrayList<>();
+mutableList.add("maçã");
+mutableList.add("alface");
+mutableList.add("tomate");
+
+- LinkedList<String>
+
+Indexada: sim
+Características: Bom para adicionar e remover itens nas extremidades da lista, pois essas operações são rápidas.
+
+Exemplo:
+List<String> linkedList = new LinkedList<>();
+linkedList.add("maçã");
+linkedList.add("alface");
+linkedList.add("tomate");
+
+b) Imutáveis (não é possível adicionar, remover ou modificar elementos após a criação)
+
+- List.of(String ...)
+Indexada: sim
+Características: Bom para listas constantes, quando o conteúdo não precisa ser alterado. Lança a exceção UnsupportedOperationException
+se tentar modificar.
+Exemplo:
+List<String> imutableList = List.of("maçã", "alface", "tomate");
+
+-Collections.unmodifiableList(List<String>)
+Indexada: sim
+Características: cria uma camada imutável sobre uma lista existente. alterações na lista eoriginal se refletem na lista inutável, mas não se pode alterar a lista envolvida (unmodificableList) diretamente.
+Exemplo:
+List<String> originalList = new ArrayList<>(List.of("maçã", "alface", "tomate"));
+List<String> unmodifiableList = Collections.unmodifiableList(originalList);
+
+c) Tipos específicos de listas
+- copyOnWriteArrayList<String>
+É mutável, mas especializado para cenários com leitura frequente e modificações raras
+Indexada: sim
+Características: útil num ambiente multithread, pois garante segurança em operações concorrentes. Cria uma cópia da lista ao escrevr, o que pode ser caro.
+Exemplo:
+List<String> copyOnWriteList = new CopyOnWriteArrayList<>(List.of("maçã", "pepino"));
+
+- Stack<String>
+Indexada: sim, mas acessado principalemnte como uma pilha(LIFO - last In, first Out)
+Características: extende "Vector", permitindo assim operações de pilha (push, pop, peek), mas não é usada comumente, em favor de Deque
+Exemplo:
+Stack<String> stack = new Stack<>();
+stack.push("maçã");
+stack.push("alface");
+stack.push("tomate");
+
+Escolhendo o Tipo de Lista
+Use ArrayList para a maioria dos casos onde você precisa de uma lista mutável com acesso rápido por índice.
+Use LinkedList se você precisar adicionar ou remover elementos frequentemente nas extremidades.
+Use List.of ou Collections.unmodifiableList para criar listas imutáveis que não serão alteradas.
+Use CopyOnWriteArrayList em ambientes multithread onde a leitura é muito mais frequente que a modificação.
+
+Comparação de Desempenho
+ArrayList geralmente tem melhor desempenho para acessar elementos por índice.
+LinkedList tem desempenho superior para inserções e remoções frequentes.
+Listas Imutáveis (List.of) são rápidas na criação, mas qualquer tentativa de modificação resultará em exceção.
